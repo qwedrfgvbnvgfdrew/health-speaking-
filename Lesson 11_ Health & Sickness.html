@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lesson 11: Health &amp; Sickness</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070B1E;--panel:rgba(18,28,64,.72);--ink:#EAF4FF;--muted:#9FB4D6;--ice:#8EE3FF;--yellow:#FFE600;--green:#19E37A;--line:rgba(142,227,255,.28);
+--head:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--body:"Source Serif 4",Georgia,serif;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px;height:100%}
+body{margin:0;min-height:100%;background:radial-gradient(ellipse at 85% 0%,#1d3f7a 0,transparent 45%),radial-gradient(ellipse at 0% 30%,#3a1f6b 0,transparent 40%),radial-gradient(ellipse at 50% 110%,#0f4d6e 0,transparent 50%),var(--bg);background-attachment:fixed;color:var(--ink);font:22px/1.65 var(--body)}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:0}
+.moon{position:fixed;top:5vh;right:6vw;width:min(15vw,110px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#cfe9ff 60%,#9cc8ff);box-shadow:0 0 60px 20px rgba(160,210,255,.35),0 0 160px 60px rgba(120,170,255,.2);z-index:0;opacity:.85}
+nav,header,main,footer{position:relative;z-index:1}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:8px;padding:10px 16px;overflow-x:auto;background:rgba(7,11,30,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav a{font:800 15px var(--head);color:var(--ink);text-decoration:none;padding:7px 15px;border-radius:99px;border:1.5px solid var(--line);white-space:nowrap}
+nav a:hover,nav a:focus-visible{background:var(--ice);color:#07142e;outline:none;box-shadow:0 0 20px var(--ice)}
+header{max-width:1000px;margin:0 auto;padding:60px 20px 10px}
+.tag{font:800 16px var(--head);color:#07142e;background:var(--ice);display:inline-block;padding:5px 16px;border-radius:99px;box-shadow:0 0 24px var(--ice)}
+h1{font:800 clamp(48px,11vw,130px)/.95 var(--head);letter-spacing:-.035em;margin:20px 0 14px}
+h2{font:800 clamp(38px,8vw,84px)/1 var(--head);letter-spacing:-.03em;margin:0 0 10px}
+.sub{font-size:clamp(20px,3vw,26px);color:var(--muted);max-width:30ch}
+.wv .wd{display:inline-block;white-space:nowrap}
+.wv .wd span{display:inline-block;animation:wave 3.2s ease-in-out infinite;animation-delay:calc(var(--i)*70ms)}
+@keyframes wave{0%,100%{transform:translateY(0);color:#fff;text-shadow:0 0 14px rgba(142,227,255,.55)}50%{transform:translateY(-.1em);color:#bff0ff;text-shadow:0 0 34px rgba(180,240,255,1),0 0 70px rgba(100,180,255,.6)}}
+main{max-width:1000px;margin:0 auto;padding:0 16px 80px}
+section{margin-top:56px;padding:34px clamp(18px,4vw,44px);background:var(--panel);border:1px solid var(--line);border-radius:28px;box-shadow:0 0 70px rgba(110,190,255,.2),inset 0 0 50px rgba(110,190,255,.05)}
+.lead{color:var(--muted);font-size:clamp(20px,2.6vw,24px);margin:0 0 24px;max-width:46ch}
+mark{background:linear-gradient(transparent 8%,var(--yellow) 8%,var(--yellow) 92%,transparent 92%);color:#07142e;padding:0 .2em;border-radius:3px;font-weight:600}
+.gram{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:26px}
+.gc{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.gc h3{font:800 24px var(--head);margin:0 0 8px;color:var(--ice)}
+.gc .f{font:800 18px var(--head);background:var(--yellow);color:#07142e;display:inline-block;padding:4px 10px;border-radius:4px;margin-bottom:10px}
+.gc p{margin:6px 0;font-size:19px}
+.read{font-size:clamp(23px,3vw,30px);line-height:1.7}
+.read p{margin:0 0 18px}
+.w{cursor:pointer;color:#fff;font-weight:700;border-bottom:2px dotted var(--ice);text-shadow:0 0 14px rgba(142,227,255,.6)}
+.w:hover,.w:focus-visible{color:var(--ice);outline:none;text-shadow:0 0 22px var(--ice)}
+.vgrid{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.vgrid button,.chip{font:700 17px var(--head);color:var(--ink);background:rgba(142,227,255,.1);border:1.5px solid var(--line);border-radius:99px;padding:8px 16px;cursor:pointer}
+.vgrid button:hover,.vgrid button:focus-visible{background:var(--ice);color:#07142e;outline:none}
+.bubbles{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.bub{position:relative;text-align:left;font:600 clamp(19px,2.3vw,22px)/1.3 var(--head);color:var(--ink);background:linear-gradient(145deg,rgba(60,110,200,.35),rgba(30,50,110,.55));border:1.5px solid var(--line);border-radius:30px 30px 30px 6px;padding:22px 22px 26px;min-height:130px;cursor:pointer;box-shadow:0 0 28px rgba(110,190,255,.18)}
+.bub:hover,.bub:focus-visible{transform:translateY(-5px);box-shadow:0 0 44px rgba(142,227,255,.5);outline:none;transition:.2s}
+.bub small{display:block;color:var(--ice);font-size:14px;margin-bottom:6px}
+.bub.done{border-color:var(--green)}
+.bub.done::after{content:"❄︎";position:absolute;right:14px;bottom:8px;font-size:26px;color:var(--green);text-shadow:0 0 14px var(--green)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.hwt{font:800 15px var(--head);color:#07142e;background:var(--yellow);padding:2px 10px;border-radius:99px;display:inline-block;margin-bottom:8px}
+#modal{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(3,6,20,.82);backdrop-filter:blur(6px)}
+#modal.on{display:flex}
+.box{position:relative;width:min(900px,100%);max-height:92vh;overflow:auto;background:linear-gradient(160deg,#17285a,#0c1330);border:1.5px solid var(--ice);border-radius:30px;padding:clamp(22px,4vw,44px);box-shadow:0 0 90px rgba(142,227,255,.4);animation:pop .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.6);opacity:0}}
+.x{position:absolute;top:12px;right:16px;font:800 28px var(--head);background:none;border:0;color:var(--ink);cursor:pointer}
+.lab{font:800 15px var(--head);color:var(--ice)}
+.q{font:800 clamp(34px,6.5vw,66px)/1.08 var(--head);letter-spacing:-.02em;margin:10px 0 18px}
+.box ul,.box ol{padding-left:24px;margin:8px 0 16px;font-size:21px}
+.box h4{font:800 20px var(--head);color:var(--yellow);margin:18px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{cursor:default;background:var(--yellow);color:#07142e;border:0}
+.ipa{font-size:26px;color:var(--ice);margin:0 0 14px}
+.spk{font-size:22px;background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:99px;cursor:pointer;padding:2px 10px}
+.tri{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tri div{background:rgba(255,255,255,.06);border-radius:14px;padding:12px 16px;font-size:21px}
+.tri em{display:block;font:800 14px var(--head);font-style:normal;color:var(--ice)}
+.done-btn{font:800 22px var(--head);background:var(--green);color:#052a17;border:0;border-radius:99px;padding:12px 30px;cursor:pointer;margin-top:10px;box-shadow:0 0 30px rgba(25,227,122,.5)}
+.flake{position:fixed;z-index:30;left:50%;top:50%;font-size:min(70vw,520px);line-height:1;color:#fff;text-shadow:0 0 40px #8EE3FF,0 0 120px #5aa8ff;pointer-events:none;transform:translate(-50%,-50%) scale(0);animation:fl 2s ease-out forwards}
+@keyframes fl{0%{transform:translate(-50%,-50%) scale(0) rotate(-90deg);opacity:0}30%{transform:translate(-50%,-50%) scale(1) rotate(0);opacity:1}100%{transform:translate(-50%,-50%) scale(1.25) rotate(60deg);opacity:0}}
+footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:16px}
+@media (prefers-reduced-motion:reduce){.wv .wd span,.box,.flake{animation:none}.flake{transform:translate(-50%,-50%) scale(1)}}
+</style>
+</head>
+<body>
+<canvas id="snow" aria-hidden="true"></canvas><div class="moon" aria-hidden="true"></div>
+<nav aria-label="Sections"><a href="#s1">1 Grammar</a><a href="#s2">2 Speaking text</a><a href="#s3">3 Part 1</a><a href="#s4">4 Part 2</a><a href="#s5">5 Part 3</a><a href="#s6">6 Homework</a></nav>
+<header><span class="tag">LESSON 11 · IELTS SPEAKING</span><h1 class="wv">Health &amp; Sickness</h1><p class="sub">Click any bold word for meanings. Click any question to open it big.</p></header>
+<main>
+<section id="s1"><h2 class="wv">1. Grammar</h2><p class="lead">Three structures from Days 6, 8 and 14. Use each one in every answer.</p>
+<div class="gram">
+<div class="gc"><h3>Day 6: opinion</h3><span class="f">Full sentence + which I believe + is + adj</span><p>Adds your view after any fact.</p><p>Not: “which I believe it is”.</p></div>
+<div class="gc"><h3>Day 8: not yet</h3><span class="f">Subject + to be + yet to + verb</span><p>Something has not happened, but will.</p><p>Verb stays in the base form.</p></div>
+<div class="gc"><h3>Day 14: almost zero</h3><span class="f">little to no + noun</span><p>Works with time, money, effort, chance.</p><p>Means “very little, nearly none”.</p></div>
+</div>
+<div class="read"><p>My city has a health problem, <mark>which I believe is</mark> serious. Many people do <mark>little to no</mark> exercise, so they feel tired. The new park is <mark>yet to</mark> open, <mark>which I think is</mark> a pity, because families have <mark>little to no</mark> safe places to walk. Our hospital is <mark>yet to</mark> hire enough doctors, <mark>which I believe is</mark> worrying. Still, young people run together every morning, <mark>which I think is</mark> wonderful. <mark>Little to no</mark> change happens overnight, yet every step counts.</p></div></section>
+
+<section id="s2"><h2 class="wv">2. Speaking text</h2><p class="lead">Every bold phrase from the lesson is here. Click one to open its card.</p><div class="read" id="text"></div><div class="vgrid" id="vg"></div></section>
+
+<section id="s3"><h2 class="wv">3. Part 1: 20 bubbles</h2><p class="lead">Answer out loud and slip in the yellow words. Finish a bubble to release a snowflake.</p><div class="bubbles" id="p1"></div></section>
+<section id="s4"><h2 class="wv">4. Part 2: 15 cue cards</h2><p class="lead">Open a card to see the question big, with a plan to build your answer.</p><div class="cards" id="p2"></div></section>
+<section id="s5"><h2 class="wv">5. Part 3: 15 questions</h2><p class="lead">Longer, more abstract answers. Each has a frame to follow.</p><div class="cards" id="p3"></div></section>
+<section id="s6"><h2 class="wv">6. Homework</h2><p class="lead">12 questions on new health topics we have not touched yet.</p><div class="cards" id="hw"></div></section>
+</main>
+<footer>Pronunciation is IPA. The 🔊 button reads the word aloud if your browser supports it.</footer>
+<div id="modal" role="dialog" aria-modal="true"><div class="box"><button class="x" aria-label="Close">×</button><div id="mc"></div></div></div>
+<script>
+const V=[
+["lifestyle changes","/ˈlaɪfstaɪl ˈtʃeɪndʒɪz/","new daily habits that change how you live","изменения образа жизни","hayot tarzidagi o‘zgarishlar",["I made lifestyle changes after my birthday.","Small lifestyle changes can add years to your life.","Doctors suggest lifestyle changes before pills."]],
+["overall health","/ˌoʊvərˈɔːl helθ/","the general condition of your body and mind","общее состояние здоровья","umumiy salomatlik",["Sleep improves your overall health.","His overall health is excellent for his age.","Stress harms overall health."]],
+["life expectancy","/laɪf ɪkˈspektənsi/","how long a person is expected to live","продолжительность жизни","kutilayotgan umr davomiyligi",["Life expectancy in Japan is very high.","Clean water raises life expectancy.","Smoking lowers your life expectancy."]],
+["quit smoking","/kwɪt ˈsmoʊkɪŋ/","stop smoking for good","бросить курить","chekishni tashlash",["My uncle quit smoking last year.","It is hard to quit smoking alone.","Many people quit smoking in January."]],
+["reduce stress","/rɪˈduːs stres/","make worry and tension smaller","снижать стресс","stressni kamaytirish",["Music helps me reduce stress.","Walking can reduce stress quickly.","Try to reduce stress before exams."]],
+["balanced diet","/ˈbælənst ˈdaɪət/","eating the right mix of foods","сбалансированное питание","muvozanatli ovqatlanish",["A balanced diet includes fruit and protein.","Students rarely eat a balanced diet.","A balanced diet gives you energy."]],
+["plenty of sleep","/ˈplenti əv sliːp/","enough sleep, or even a lot","достаточно сна","yetarlicha uyqu",["Teenagers need plenty of sleep.","I get plenty of sleep at weekends.","Plenty of sleep improves memory."]],
+["exercise regularly","/ˈeksərsaɪz ˈreɡjələrli/","do sport often, on a fixed schedule","регулярно заниматься спортом","muntazam mashq qilish",["I exercise regularly, three times a week.","Doctors say we should exercise regularly.","If you exercise regularly, you sleep better."]],
+["vaccinations","/ˌvæksɪˈneɪʃənz/","injections that protect you from diseases","прививки","emlashlar",["Children get vaccinations at school.","Vaccinations prevent many diseases.","Do you need vaccinations to travel?"]],
+["health insurance","/helθ ɪnˈʃʊrəns/","a plan that pays your medical costs","медицинская страховка","sog‘liqni sug‘urtalash",["Health insurance covers hospital bills.","My employer pays for my health insurance.","Without health insurance, surgery is costly."]],
+["suffer / sustain injuries","/ˈsʌfər/ · /səˈsteɪn ˈɪndʒəriz/","to get hurt in an accident","получить травмы","jarohat olish",["He sustained injuries in a crash.","Players often suffer injuries in football.","Nobody sustained serious injuries."]],
+["minor injuries","/ˈmaɪnər ˈɪndʒəriz/","small injuries, not serious","лёгкие травмы","yengil jarohatlar",["She escaped with minor injuries.","Minor injuries heal in days.","Seatbelts reduce all but minor injuries."]],
+["broken / fractured a bone","/ˈfræktʃərd ə boʊn/","to break a bone","сломать кость","suyak sinishi",["He fractured a bone skiing.","She has broken a bone before.","A fractured bone takes weeks to heal."]],
+["put in a cast","/pʊt ɪn ə kæst/","cover a broken limb with hard plaster","наложить гипс","gips qo‘yish",["They put his arm in a cast.","The cast stays on for six weeks.","I had my leg put in a cast."]],
+["give stitches","/ɡɪv ˈstɪtʃɪz/","sew a cut closed","наложить швы","choklar qo‘yish, tikish",["The doctor gave me stitches.","Deep cuts need stitches.","He got five stitches on his chin."]],
+["prevent infection","/prɪˈvent ɪnˈfekʃən/","stop germs from entering a wound","предотвратить инфекцию","infeksiyaning oldini olish",["Clean the cut to prevent infection.","Ointment helps prevent infection.","Washing hands prevents infection."]],
+["minor ailment","/ˈmaɪnər ˈeɪlmənt/","a small, not serious illness","лёгкое недомогание","yengil kasallik",["A headache is a minor ailment.","Minor ailments pass in a few days.","I treat minor ailments at home."]],
+["take aspirin / relieve the pain","/rɪˈliːv ðə peɪn/","use medicine to make pain smaller","принять аспирин / облегчить боль","aspirin ichish / og‘riqni yengillashtirish",["I take aspirin for headaches.","Ice can relieve the pain.","This cream relieves the pain fast."]],
+["suffer from","/ˈsʌfər frʌm/","to have an illness for a long time","страдать от","...dan aziyat chekmoq",["She suffers from migraines.","Many people suffer from back pain.","He suffers from asthma."]],
+["chronic condition","/ˈkrɑːnɪk kənˈdɪʃən/","an illness that lasts a long time","хроническое заболевание","surunkali kasallik",["Diabetes is a chronic condition.","Chronic conditions need long treatment.","Asthma is a common chronic condition."]],
+["over-the-counter","/ˌoʊvər ðə ˈkaʊntər/","medicine you can buy without a prescription","безрецептурный","retseptsiz sotiladigan",["Aspirin is sold over-the-counter.","Over-the-counter pills are cheap.","I bought an over-the-counter cough syrup."]],
+["prescription medications","/prɪˈskrɪpʃən ˌmedɪˈkeɪʃənz/","medicines you can get only from a doctor’s order","рецептурные лекарства","retsept bilan beriladigan dorilar",["Antibiotics are prescription medications.","Never share prescription medications.","He takes prescription medications daily."]],
+["alleviate the symptoms","/əˈliːvieɪt ðə ˈsɪmptəmz/","make signs of illness less strong","облегчить симптомы","simptomlarni yengillashtirish",["Rest can alleviate the symptoms.","Tea alleviates the symptoms of a cold.","These pills alleviate the symptoms."]],
+["have / catch a cold","/kætʃ ə koʊld/","get a mild virus with a runny nose and cough","простудиться / быть простуженным","shamollash",["I caught a cold in the rain.","My sister has a cold today.","Cover your mouth, or others will catch a cold."]],
+["diagnosed with","/ˌdaɪəɡˈnoʊzd wɪð/","told by a doctor that you have an illness","диагностировали (болезнь)","tashxis qo‘yilgan",["He was diagnosed with diabetes.","She was diagnosed with asthma at six.","Early diagnosed patients recover better."]],
+["terminally ill","/ˈtɜːrmɪnəli ɪl/","so sick that a cure is impossible","неизлечимо больной","davosiz kasal",["The terminally ill patient went home.","Nurses support terminally ill people.","Terminally ill patients need comfort."]],
+["STDs","/ˌes tiː ˈdiːz/","diseases passed on through sexual contact","ЗППП","jinsiy yo‘l bilan yuqadigan kasalliklar",["Education reduces STDs.","Tests can find STDs early.","STDs can be prevented."]]
+];
+const T=[
+"A year ago I made <mark>little to no</mark> effort to protect my {1|overall health}, so I decided on serious {0|lifestyle changes}. I began to {3|quit smoking}, {4|reduce stress}, eat a {5|balanced diet}, get {6|plenty of sleep} and {7|exercise regularly}, <mark>which I believe is</mark> the best way to raise your {2|life expectancy}. I am <mark>yet to</mark> feel perfect, but I am already stronger.",
+"Prevention matters too. I got all my {8|vaccinations}, <mark>which I think is</mark> essential, and I bought {9|health insurance}, <mark>which I believe is</mark> wise, because illness can cost a fortune. My cousin, however, spent <mark>little to no</mark> time thinking about it and is <mark>yet to</mark> buy any.",
+"Accidents happen. Last winter I slipped on ice and could easily have {10|sustained serious injuries}, but luckily I only had {11|minor injuries}. My friend {12|fractured a bone} in his leg, so the doctor {13|put his leg in a cast}, and the cast is <mark>yet to</mark> come off. When I cut my hand, the doctor {14|gave me stitches} and an ointment to {15|prevent infection}, <mark>which I think is</mark> standard care.",
+"For a {16|minor ailment} like a headache, I {17|take some aspirin} to {17|relieve the pain}, and I spend <mark>little to no</mark> money on it, <mark>which I believe is</mark> sensible. My mother {18|suffers from} a {19|chronic condition}, asthma, and she uses {20|over-the-counter} and {21|prescription medications} that {22|alleviate the symptoms}. Her doctor is <mark>yet to</mark> find a permanent cure.",
+"Last month I {23|caught a cold}, and now my brother {23|has a cold} too, so we stay home. Remember, you can catch contagious diseases like {26|STDs} as well, and some schools give them <mark>little to no</mark> attention, <mark>which I think is</mark> dangerous. People {24|diagnosed with} cancer need long treatment, and when someone is {25|terminally ill}, doctors are <mark>yet to</mark> offer a cure, <mark>which I believe is</mark> heartbreaking. That is why I value every healthy day."];
+const P1=[
+["Do you think you are a healthy person?","overall health · which I believe is…"],["What do you do to stay healthy?","balanced diet · exercise regularly · little to no"],["How often do you exercise?","exercise regularly · little to no"],["Do you eat a balanced diet?","balanced diet · yet to"],["Do you get enough sleep?","plenty of sleep · little to no"],["What do you do when you catch a cold?","catch a cold · over-the-counter · which I think is…"],["Do you often go to the doctor?","minor ailment · little to no"],["Have you ever been in hospital?","sustain injuries · fractured a bone · yet to"],["Do you take medicine when you are ill?","relieve the pain · prescription medications"],["Is health insurance common in your country?","health insurance · yet to"],["Do people in your country live long lives?","life expectancy · which I think is…"],["How do you deal with stress?","reduce stress · which I believe is…"],["Did you have vaccinations as a child?","vaccinations · prevent infection"],["Do you know anyone who smokes?","quit smoking · little to no · which I believe is…"],["Have you ever hurt yourself?","minor injuries · give stitches · put in a cast"],["Do young people care about their health?","lifestyle changes · little to no"],["What do you do when you have a headache?","take aspirin · relieve the pain"],["Have you ever visited a doctor for something serious?","diagnosed with · chronic condition"],["What would you change about your health habits?","yet to · lifestyle changes · which I think is…"],["Are regular check-ups important?","prevent infection · alleviate the symptoms · which I believe is…"]];
+const P2=[
+["Describe a time when you were ill.","when it happened;what was wrong;how you recovered;how you felt","flu in winter · stayed in bed · took over-the-counter pills"],
+["Describe a very healthy person you know.","who they are;how you know them;what healthy habits they have;why you admire them","a grandfather who walks daily · balanced diet · long life expectancy"],
+["Describe a healthy meal you enjoy.","what it is;what is in it;when you eat it;why it is good for you","plov with less oil · salad · balanced diet"],
+["Describe a time you visited a hospital or clinic.","when and why you went;who you met;what happened;how you felt after","a check-up · long queue · diagnosed with nothing serious"],
+["Describe a habit that is good for your health.","what it is;when you started;how often you do it;how it helps","morning walks · exercise regularly · reduce stress"],
+["Describe a time when you hurt yourself.","what happened;where you were;what treatment you had;how long it took to heal","fall from a bike · minor injuries · stitches or a cast"],
+["Describe a piece of health advice you received.","what the advice was;who gave it;whether you followed it;why it was useful","sleep earlier · plenty of sleep · yet to follow it fully"],
+["Describe a place where you relax and reduce stress.","where it is;what you do there;who you go with;why it calms you","a park or a mountain lake · little to no noise"],
+["Describe a time you had to take medicine.","what was wrong;what medicine you took;who told you to take it;how it helped","relieve the pain · prescription medications · alleviate the symptoms"],
+["Describe someone you know with a long-term illness.","who the person is;what condition they have;how they cope;how you help","chronic condition · suffers from · medications every day"],
+["Describe a time you could not sleep well.","when it happened;what kept you awake;what you did;how you felt next day","exams · phone before bed · little to no concentration"],
+["Describe a health problem common in your country.","what the problem is;who it affects;what causes it;what could help","back pain from desk jobs · lifestyle changes"],
+["Describe a time you changed your lifestyle.","what you changed;why;how hard it was;what the result was","quit smoking or sugar · reduce stress · yet to finish the change"],
+["Describe a vaccination or health campaign you know.","what it was;who ran it;who took part;why it mattered","school vaccinations · prevent infection · which I believe is vital"],
+["Describe a time you ignored your health.","what you ignored;why;what happened;what you learned","skipped meals · minor ailment grew · little to no rest"]];
+const P3=[
+["Why do some people do little to no exercise?","w","busy work · tiredness · no facilities"],["How has the diet in your country changed in recent decades?","c","more processed food · less home cooking"],["Should the government pay for everyone’s healthcare?","o","taxes · fairness · quality of service"],["What can schools do to teach children healthy habits?","s","PE lessons · healthy canteens · health classes"],["Will life expectancy keep rising?","f","medicine · cities · lifestyle diseases"],["Why do some people refuse vaccinations?","w","fear · misinformation · trust"],["Is prevention more important than treatment?","o","cost · quality of life · screening"],["How is young people’s health different from their grandparents’ health?","c","screens · sitting · more medicine"],["Who is responsible for health: individuals or the state?","o","choice · laws · education"],["What can employers do to reduce stress at work?","s","flexible hours · breaks · workload"],["Why do people ignore minor ailments?","w","no time · cost · hope it passes"],["Should smoking be banned in all public places?","o","passive smoke · personal freedom"],["What problems might hospitals face in the future?","f","ageing population · staff shortages · costs"],["Why is it expensive to treat chronic conditions?","w","long treatment · medications · specialists"],["How can countries encourage regular check-ups?","s","free tests · reminders · health insurance"]];
+const HW=[
+["p1","Do you drink enough water every day?","yet to · little to no"],["p1","Do you go to the dentist regularly?","prevent infection · which I believe is…"],["p1","Do you use a fitness watch or health app?","exercise regularly · little to no"],["p1","Do you suffer from any allergies?","suffer from · alleviate the symptoms"],
+["p2","Describe a time you helped someone who was sick.","who it was;what was wrong;how you helped;how you felt","a sick friend · soup · yet to say thanks"],
+["p2","Describe a sport you tried to get fit.","what it was;why you chose it;how it went;whether you continued","swimming · exercise regularly · little to no skill at first"],
+["p2","Describe a doctor or nurse you admire.","who they are;where you met;what they did;why you admire them","patient · kind · which I believe is rare"],
+["p2","Describe a healthy habit you want to start.","what it is;why you want it;what stops you;how you will start","early sleep · I am yet to start"],
+["p3","How important is mental health compared with physical health?","o","stigma · talking · treatment"],["p3","How has technology changed the way we look after our health?","c","apps · online doctors · wearables"],["p3","What problems do elderly people face with healthcare?","s","cost · transport · loneliness"],["p3","Should fast food advertising be limited?","o","children · obesity · freedom of choice"]];
+const FR={w:"Name two reasons → give one example → link back to the question. “There are two main reasons… First… Second… For instance…”",c:"Past → present → cause. “In the past… whereas today… This is mainly because…”",o:"Opinion → reason → example → balance. “In my view… because… For instance… That said, others argue…”",s:"Problem → cause → two solutions → result. “The root cause is… One fix is… which I believe is…”",f:"Predict → condition → result. “I expect… provided that… which I think is…”"};
+const STR="little to no · yet to · which I believe is…";
+const $=s=>document.querySelector(s),M=$('#modal'),MC=$('#mc');
+function wv(el){const w=el.textContent.split(' ');el.innerHTML='';let n=0;w.forEach((x,k)=>{const s=document.createElement('span');s.className='wd';[...x].forEach(c=>{const l=document.createElement('span');l.textContent=c;l.style.setProperty('--i',n++);s.appendChild(l)});el.appendChild(s);if(k<w.length-1)el.appendChild(document.createTextNode(' '))})}
+function show(h){MC.innerHTML=h;MC.querySelectorAll('.wv').forEach(wv);M.classList.add('on');M.querySelector('.box').scrollTop=0}
+function shut(){M.classList.remove('on');speechSynthesis&&speechSynthesis.cancel()}
+function openV(i){const v=V[i];show(`<div class="lab">B1+ vocabulary</div><h3 class="q wv">${v[0]}</h3><p class="ipa">${v[1]} <button class="spk" aria-label="Listen" data-s="${v[0]}">🔊</button></p><div class="tri"><div><em>English</em>${v[2]}</div><div><em>Русский</em>${v[3]}</div><div><em>O‘zbekcha</em>${v[4]}</div></div><h4>3 examples</h4><ol>${v[5].map(e=>`<li>${e}</li>`).join('')}</ol>`)}
+function chips(u){return `<div class="chips">${u.split(' · ').map(c=>`<span class="chip">${c}</span>`).join('')}</div>`}
+let cur=null;
+function openQ(it,btn){cur=btn;let h=`<div class="lab">${it.l}</div><h3 class="q wv">${it.q}</h3>`;
+if(it.b)h+=`<h4>You should say:</h4><ul>${it.b.split(';').map(b=>`<li>${b}</li>`).join('')}</ul>`;
+if(it.t==='1'){h+=`<h4>Slip these into your answer</h4>${chips(it.u)}<h4>How to build it</h4><p>Direct answer → one reason → a short example → a structure. Aim for 3 to 4 sentences, not just yes or no.</p>`}
+else if(it.t==='2'){h+=`<h4>Sample structure of ideas</h4><ol><li>Open: name the topic, when and where.</li><li>Cover each bullet with one detail and one example.</li><li>Fit in: ${STR}</li><li>Close with how you feel now.</li></ol><p><b>Idea seed:</b> ${it.u}</p>`}
+else{h+=`<h4>Answer frame</h4><p>${FR[it.k]}</p><h4>Idea seed</h4><p>${it.u}</p><h4>Try to fit in</h4>${chips(STR)}`}
+h+=`<button class="done-btn">I answered it ❄</button>`;show(h)}
+function flake(){const f=document.createElement('div');f.className='flake';f.textContent='❄︎';document.body.appendChild(f);setTimeout(()=>f.remove(),2100)}
+function bubble(host,it,i,cls){const b=document.createElement('button');b.className=cls;b.innerHTML=`${it.tag?`<span class="hwt">${it.tag}</span><br>`:''}<small>${it.l.replace('Homework · ','')} · ${i+1}</small>${it.q}`;b.onclick=()=>openQ(it,b);host.appendChild(b)}
+P1.forEach((p,i)=>bubble($('#p1'),{l:'Part 1',t:'1',q:p[0],u:p[1]},i,'bub'));
+P2.forEach((p,i)=>bubble($('#p2'),{l:'Part 2',t:'2',q:p[0],b:p[1],u:p[2]},i,'bub'));
+P3.forEach((p,i)=>bubble($('#p3'),{l:'Part 3',t:'3',q:p[0],k:p[1],u:p[2]},i,'bub'));
+HW.forEach((p,i)=>{const t=p[0],n=t==='p1'?'1':t==='p2'?'2':'3';const it=t==='p1'?{t:'1',q:p[1],u:p[2]}:t==='p2'?{t:'2',q:p[1],b:p[2],u:p[3]}:{t:'3',q:p[1],k:p[2],u:'new topic: use your own ideas'};it.l='Homework · Part '+n;it.tag='Part '+n;bubble($('#hw'),it,i,'bub')});
+$('#text').innerHTML=T.map(p=>`<p>${p.replace(/\{(\d+)\|([^}]+)\}/g,'<b class="w" tabindex="0" role="button" data-i="$1">$2</b>')}</p>`).join('');
+$('#vg').innerHTML=V.map((v,i)=>`<button data-i="${i}">${v[0]}</button>`).join('');
+document.addEventListener('click',e=>{const t=e.target;
+if(t.dataset&&t.dataset.i!==undefined&&(t.classList.contains('w')||t.closest('#vg')))openV(+t.dataset.i);
+else if(t.dataset&&t.dataset.s){const u=new SpeechSynthesisUtterance(t.dataset.s);u.lang='en-US';speechSynthesis.cancel();speechSynthesis.speak(u)}
+else if(t.classList.contains('done-btn')){shut();if(cur)cur.classList.add('done');flake()}
+else if(t===M||t.classList.contains('x'))shut()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')shut();if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('w'))openV(+e.target.dataset.i)});
+document.querySelectorAll('.wv').forEach(wv);
+const cv=$('#snow'),cx=cv.getContext('2d');let W,H;const F=[];
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}rs();addEventListener('resize',rs);
+const N=matchMedia('(prefers-reduced-motion:reduce)').matches?0:160;
+for(let i=0;i<N;i++)F.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*3+1,s:Math.random()*1.1+.4,d:Math.random()*6});
+function tick(t){cx.clearRect(0,0,W,H);cx.fillStyle='rgba(255,255,255,.88)';F.forEach(f=>{f.y+=f.s;f.x+=Math.sin(t/1200+f.d)*.5;if(f.y>H){f.y=-5;f.x=Math.random()*W}cx.beginPath();cx.arc(f.x,f.y,f.r,0,7);cx.fill()});requestAnimationFrame(tick)}
+if(N)requestAnimationFrame(tick);
+</script>
+</body>
+</html>
